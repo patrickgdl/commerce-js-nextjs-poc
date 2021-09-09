@@ -1,5 +1,6 @@
-import commerce from "@chec/commerce.js";
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useContext, useEffect } from "react";
+
+import commerce from "../lib/commerce";
 
 const CartStateContext = createContext();
 const CartDispatchContext = createContext();
@@ -24,28 +25,28 @@ const reducer = (state, action) => {
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setCart = (payload) => dispatch({ type: SET_CART, payload });
-
   useEffect(() => {
     getCart();
   }, []);
+
+  const setCart = (payload) => dispatch({ type: SET_CART, payload });
 
   const getCart = async () => {
     try {
       const cart = await commerce.cart.retrieve();
 
       setCart(cart);
-    } catch (error) {
+    } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <CartDispatchContext value={{ setCart }}>
-      <CartStateContext.Provider value={{ state }}>
+    <CartDispatchContext.Provider value={{ setCart }}>
+      <CartStateContext.Provider value={state}>
         {children}
       </CartStateContext.Provider>
-    </CartDispatchContext>
+    </CartDispatchContext.Provider>
   );
 };
 

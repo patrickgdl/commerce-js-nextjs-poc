@@ -1,9 +1,9 @@
-import { CartProvider } from "./context/cart";
+import { CartProvider } from "../context/cart";
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <CartProvider>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </CartProvider>
   );
 }

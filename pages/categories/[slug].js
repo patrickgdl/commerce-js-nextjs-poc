@@ -1,6 +1,6 @@
-import commerce from "../lib/commerce";
+import commerce from "../../lib/commerce";
 
-import ProductList from "../components/ProductList";
+import ProductList from "../../components/ProductList";
 
 export async function getStaticProps({ params }) {
   const { slug } = params;
